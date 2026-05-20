@@ -7,8 +7,12 @@ export const useFetch = (apiPath, queryTerm="") => {
     useEffect(() => {
         async function fetchMovies(){
           const response = await fetch(url);
+          if (!response.ok) {
+            setData([]);
+            return;
+          }
           const json = await response.json();
-          setData(json.results);
+          setData(json.results ?? []);
         }
         fetchMovies();
       }, [url])
